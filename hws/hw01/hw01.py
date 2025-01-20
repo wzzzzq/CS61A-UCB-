@@ -126,23 +126,5 @@ def false_func():
     "*** YOUR CODE HERE ***"
     print(47)
 
-
-def hailstone(x):
-    """Print the hailstone sequence starting at x and return its
-    length.
-
-    >>> a = hailstone(10)
-    10
-    5
-    16
-    8
-    4
-    2
-    1
-    >>> a
-    7
-    """
-    "*** YOUR CODE HERE ***"
-    
    
 
