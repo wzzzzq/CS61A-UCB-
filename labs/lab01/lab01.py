@@ -1,5 +1,3 @@
-from operator import mul
-from functools import reduce
 def falling(n, k):
     """Compute the falling factorial of n to depth k.
 
@@ -13,7 +11,6 @@ def falling(n, k):
     1
     """
     "*** YOUR CODE HERE ***"
- 
 
 
 def sum_digits(y):
@@ -48,8 +45,3 @@ def double_eights(n):
     False
     """
     "*** YOUR CODE HERE ***"
-   
-    
-
-
-

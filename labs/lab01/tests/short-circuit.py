@@ -7,36 +7,49 @@ test = {
         {
           'code': r"""
           >>> True and 13
-          13
+          72c74b6c7ed80d51f9fa7defbf7ed121
+          # locked
           >>> False or 0
-          0
+          b0754f6baafe74512d1be0bd5c8098ed
+          # locked
           >>> not 10
-          False
+          5dfeeb9ca37d955606d40c6553cd4956
+          # locked
           >>> not None
-          True
+          5154670fa295caf18cafa4245c1358a9
+          # locked
           """,
           'hidden': False,
-          'locked': False
+          'locked': True,
+          'multiline': False
         },
         {
           'code': r"""
           >>> True and 1 / 0 and False  # If this errors, just type Error.
-          Error
+          d7b5fd49f83e4ee318af207fc969c9f4
+          # locked
           >>> True or 1 / 0 or False  # If this errors, just type Error.
-          True
+          5154670fa295caf18cafa4245c1358a9
+          # locked
           >>> True and 0  # If this errors, just type Error.
-          0
+          b0754f6baafe74512d1be0bd5c8098ed
+          # locked
           >>> False or 1  # If this errors, just type Error.
-          1
+          f26f9ec9ba426ebfdd8a43b22c8c74a0
+          # locked
           >>> 1 and 3 and 6 and 10 and 15  # If this errors, just type Error.
-          15
+          438f344a520081fe8e2d0da944a5240b
+          # locked
           >>> -1 and 1 > 0 # If this errors, just type Error.
-          True
+          5154670fa295caf18cafa4245c1358a9
+          # locked
           >>> 0 or False or 2 or 1 / 0  # If this errors, just type Error.
-          2
+          6d6f378f0affa7f84aa38e519e353617
+          # locked
           """,
           'hidden': False,
-          'locked': False
+          'locked': True,
+          'multiline': False
         }
       ],
       'scored': False,
@@ -47,16 +60,21 @@ test = {
         {
           'code': r"""
           >>> not 0
-          True
+          5154670fa295caf18cafa4245c1358a9
+          # locked
           >>> (1 + 1) and 1  # If this errors, just type Error. If this is blank, just type Nothing.
-          1
+          f26f9ec9ba426ebfdd8a43b22c8c74a0
+          # locked
           >>> 1/0 or True  # If this errors, just type Error. If this is blank, just type Nothing.
-          Error
+          d7b5fd49f83e4ee318af207fc969c9f4
+          # locked
           >>> (True or False) and False  # If this errors, just type Error. If this is blank, just type Nothing.
-          False
+          5dfeeb9ca37d955606d40c6553cd4956
+          # locked
           """,
           'hidden': False,
-          'locked': False
+          'locked': True,
+          'multiline': False
         }
       ],
       'scored': False,

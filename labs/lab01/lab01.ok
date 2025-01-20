@@ -1,19 +1,27 @@
 {
     "name": "Lab 1",
-    "endpoint": "cal/cs61a/su20/lab01",
+    "endpoint": "cal/cs61a/sp22/lab01",
     "src": [
-        "lab01.py"
+        "lab01.py",
+        "parsons_probs/digit_pos_match.py",
+        "parsons_probs/add_in_range.py",
+        "parsons_probs/k_occurrence.py"
     ],
     "tests": {
         "lab*.py": "doctest",
-        "tests/*.py": "ok_test"
+        "tests/*.py": "ok_test",
+        "parsons_probs/k_occurrence.py:k_occurrence": "doctest",
+        "parsons_probs/digit_pos_match.py:digit_pos_match": "doctest",
+        "parsons_probs/add_in_range.py:add_in_range": "doctest"
     },
     "default_tests": [
         "control",
         "short-circuit",
         "debugging-quiz",
         "falling",
-        "sum_digits"
+        "sum_digits",
+        "digit_pos_match",
+        "add_in_range"
     ],
     "protocols": [
         "restore",
@@ -22,5 +30,20 @@
         "unlock",
         "grading",
         "backup"
-    ]
+    ],
+    "parsons": {
+        "sum digits": {
+            "required": [
+                "digit_pos_match"
+            ],
+            "optional": [
+                "k_occurrence"
+            ]
+        },
+        "falling factorial": {
+            "required": [
+                "add_in_range"
+            ]
+        }
+    }
 }
