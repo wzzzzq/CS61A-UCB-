@@ -7,4 +7,4 @@ wzq的CS61A自学仓库
 - [Course Website (spring 2022)](https://cs61a.vercel.app/)
 - [Textbook (SICP for python)](http://composingprograms.com/pages/11-getting-started.html) 
 - [Online editor (support scheme, SQL and python)](https://code.cs61a.org)
-- [(中文教材)] (https://composingprograms.netlify.app/)
+- [中文教材](https://composingprograms.netlify.app/) 
