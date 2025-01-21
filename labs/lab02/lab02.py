@@ -102,6 +102,7 @@ def composite_identity(f, g):
         t1=composer(f,g)
         t2=composer(g,f)
         return t1(x)==t2(x)
+    return check
 
 def cycle(f1, f2, f3):
     """Returns a function that is itself a higher-order function.
