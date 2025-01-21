@@ -33,7 +33,8 @@ test = {
           # locked
           """,
           'hidden': False,
-          'locked': True
+          'locked': True,
+          'multiline': False
         }
       ],
       'scored': False,

@@ -1,5 +1,6 @@
 from operator import add, sub
 
+
 def a_plus_abs_b(a, b):
     """Return a+abs(b), but without calling abs.
 
@@ -7,16 +8,27 @@ def a_plus_abs_b(a, b):
     5
     >>> a_plus_abs_b(2, -3)
     5
-    >>> # a check that you didn't change the return statement!
+    >>> a_plus_abs_b(-1, 4)
+    3
+    >>> a_plus_abs_b(-1, -4)
+    3
+    """
+    if b < 0:
+        f = sub
+    else:
+        f = add
+    return f(a, b)
+
+
+def a_plus_abs_b_syntax_check():
+    """Check that you didn't change the return statement of a_plus_abs_b.
+
+    >>> # You aren't expected to understand the code of this test.
     >>> import inspect, re
     >>> re.findall(r'^\s*(return .*)', inspect.getsource(a_plus_abs_b), re.M)
-    ['return h(a, b)']
+    ['return f(a, b)']
     """
-    if b >= 0:
-        h = add
-    else:
-        h = sub
-    return h(a, b)
+    # You don't need to edit this function. It's just here to check your work.
 
 
 def two_of_three(i, j, k):
@@ -32,11 +44,22 @@ def two_of_three(i, j, k):
     >>> two_of_three(5, 5, 5)
     50
     """
-    return min(i*i+j*j,j*j+k*k,i*i+k*k)
+    return min(i**2+j**2,j**2+k**2,i**2+k**2)
 
 
-def largest_factor(x):
-    """Return the largest factor of x that is smaller than x.
+def two_of_three_syntax_check():
+    """Check that your two_of_three code consists of nothing but a return statement.
+
+    >>> # You aren't expected to understand the code of this test.
+    >>> import inspect, ast
+    >>> [type(x).__name__ for x in ast.parse(inspect.getsource(two_of_three)).body[0].body]
+    ['Expr', 'Return']
+    """
+    # You don't need to edit this function. It's just here to check your work.
+
+
+def largest_factor(n):
+    """Return the largest factor of n that is smaller than n.
 
     >>> largest_factor(15) # factors are 1, 3, 5
     5
@@ -46,85 +69,6 @@ def largest_factor(x):
     1
     """
     "*** YOUR CODE HERE ***"
-    for i in range(x//2,0,-1):
-        if x%i==0:
+    for i in range(n//2,0,-1):
+        if n%i==0:
             return i
-
-def k_in_num(k, num):
-    """
-    Complete k_in_num, a function which returns True if num has the digit k and
-    returns False if num does not have the digit k. 0 is considered to have no
-    digits.
-
-    >>> k_in_num(3, 123) # .Case 1
-    True
-    >>> k_in_num(2, 123) # .Case 2
-    True
-    >>> k_in_num(5, 123) # .Case 3
-    False
-    >>> k_in_num(0, 0) # .Case 4
-    False
-    """
-    "*** YOUR CODE HERE ***"
-    while num:
-        if num%10==k:
-            return True
-        num=num//10
-    return False
-
-
-def if_function(condition, true_result, false_result):
-    """Return true_result if condition is a true value, and
-    false_result otherwise.
-
-    >>> if_function(True, 2, 3)
-    2
-    >>> if_function(False, 2, 3)
-    3
-    >>> if_function(3==2, 3+2, 3-2)
-    1
-    >>> if_function(3>2, 3+2, 3-2)
-    5
-    """
-    if condition:
-        return true_result
-    else:
-        return false_result
-
-
-def with_if_statement():
-    """
-    >>> result = with_if_statement()
-    47
-    >>> print(result)
-    None
-    """
-    if cond():
-        return true_func()
-    else:
-        return false_func()
-
-def with_if_function():
-    """
-    >>> result = with_if_function()
-    42
-    47
-    >>> print(result)
-    None
-    """
-    return if_function(cond(), true_func(), false_func())
-
-def cond():
-    "*** YOUR CODE HERE ***"
-    return False
-
-def true_func():
-    "*** YOUR CODE HERE ***"
-    print(42)
-
-def false_func():
-    "*** YOUR CODE HERE ***"
-    print(47)
-
-   
-

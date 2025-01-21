@@ -1,4 +1,3 @@
-
 def lambda_curry2(func):
     """
     Returns a Curried version of a two-argument function FUNC.
@@ -15,8 +14,18 @@ def lambda_curry2(func):
     3
     """
     "*** YOUR CODE HERE ***"
-    return lambda x : lambda y : func(x, y)
+    return lambda x:lambda y:func(x,y)
 
+
+def lambda_curry2_syntax_check():
+    """Checks that definition of lambda_curry2 is just a return statement.
+
+    >>> # You aren't expected to understand the code of this test.
+    >>> import inspect, ast
+    >>> [type(x).__name__ for x in ast.parse(inspect.getsource(lambda_curry2)).body[0].body]
+    ['Expr', 'Return']
+    """
+    # You don't need to edit this function. It's just here to check your work.
 
 
 def count_cond(condition):
@@ -47,56 +56,25 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
-    def count(n):
-        i, count = 1, 0
-        while i <= n:
-            if condition(n, i):
-                count += 1
-            i += 1
-        return count
-    return Count
-
-
-
-def both_paths(sofar="S"):
-    """
-    >>> up, down = both_paths()
-    S
-    >>> upup, updown = up()
-    SU
-    >>> downup, downdown = down()
-    SD
-    >>> _ = upup()
-    SUU
-    """
-    "*** YOUR CODE HERE ***"
-    print(sofar)
-    def up():
-        return both_paths(sofar + 'U')
     
-    def down():
-        return both_paths(sofar + 'D')
 
-    return up, down
-
-
-
-def compose1(f, g):
+def composer(f, g):
     """Return the composition function which given x, computes f(g(x)).
 
     >>> add_one = lambda x: x + 1        # adds one to x
     >>> square = lambda x: x**2
-    >>> a1 = compose1(square, add_one)   # (x + 1)^2
+    >>> a1 = composer(square, add_one)   # (x + 1)^2
     >>> a1(4)
     25
     >>> mul_three = lambda x: x * 3      # multiplies 3 to x
-    >>> a2 = compose1(mul_three, a1)    # ((x + 1)^2) * 3
+    >>> a2 = composer(mul_three, a1)    # ((x + 1)^2) * 3
     >>> a2(4)
     75
     >>> a2(5)
     108
     """
     return lambda x: f(g(x))
+
 
 def composite_identity(f, g):
     """
@@ -113,8 +91,6 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
-    return lambda x : compose1(f, g)(x) == compose1(g, f)(x)
-
 
 
 def cycle(f1, f2, f3):
@@ -144,18 +120,3 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
-    def combine(n):
-        def F(x):
-            p = n // 3
-            q = n % 3
-            for i in range(p):
-                x = f3(f2(f1(x)))
-            if q == 0:
-                return x
-            elif q == 1:
-                return f1(x)
-            else:
-                return f2(f1(x))
-        return F
-    return combine
-
