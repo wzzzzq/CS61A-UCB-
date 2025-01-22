@@ -5,10 +5,10 @@ from urllib.request import Request, urlopen
 
 import hog
 
-ENDPOINT = "https://hog-calc.apps.cs61a.org/api/compare_strategies"
+ENDPOINT = "https://hog-calc.cs61a.org/api/compare_strategies"
 
 STRATEGY_0 = hog.final_strategy
-STRATEGY_1 = hog.always_roll(4)
+STRATEGY_1 = hog.always_roll(6)
 
 
 def export(strategy):
@@ -37,6 +37,7 @@ def main():
 ##################
 # AUTHENTICATION #
 ################ #
+
 
 """
 Bacon OK integration: mostly ported from OK Client
@@ -273,6 +274,7 @@ class OAuthSession:
             cur_time = int(time.time())
             self.expires_at = cur_time + expires_in
         return self.access_token
+
 
 if __name__ == '__main__':
     main()
