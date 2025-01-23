@@ -1,19 +1,21 @@
 {
     "name": "Lab 5",
-    "endpoint": "cal/cs61a/su20/lab05",
+    "endpoint": "cal/cs61a/sp22/lab05",
     "src": [
-        "lab05.py"
+        "lab05.py",
+        "parsons_probs/replace_elements.py"
     ],
     "tests": {
         "lab*.py": "doctest",
-        "tests/*.py": "ok_test"
+        "tests/*.py": "ok_test",
+        "parsons_probs/replace_elements.py:replace_elements": "doctest"
     },
     "default_tests": [
-        "coords",
-        "riffle",
-        "berry_finder",
-        "sprout_leaves",
-        "check_abstraction"
+        "flatten",
+        "couple",
+        "list-mutation",
+        "insert_items",
+        "replace_elements"
     ],
     "protocols": [
         "restore",
@@ -22,5 +24,12 @@
         "grading",
         "analytics",
         "backup"
-    ]
+    ],
+    "parsons": {
+        "insert_items": {
+            "required": [
+                "replace_elements"
+            ]
+        }
+    }
 }
