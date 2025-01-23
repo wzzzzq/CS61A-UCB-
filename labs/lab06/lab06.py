@@ -1,85 +1,125 @@
-this_file = __file__
+class Cat:
+    def __init__(self, name, owner, lives=9):
+        self.is_alive = True
+        self.name = name
+        self.owner = owner
+        self.lives = lives
+
+    def talk(self):
+        return self.name + ' says meow!'
+
+    @classmethod
+    def adopt_a_cat(cls, owner):
+        """
+        Returns a new instance of a Cat.
+
+        This instance's owner is the given owner.
+        Its name and its number of lives is chosen programatically
+        based on the spec's noted behavior.
+
+        >>> cat1 = Cat.adopt_a_cat("Ifeoma")
+        >>> isinstance(cat1, Cat)
+        True
+        >>> cat1.owner
+        'Ifeoma'
+        >>> cat1.name
+        'Felix'
+        >>> cat1.lives
+        11
+        >>> cat2 = Cat.adopt_a_cat("Ay")
+        >>> cat2.owner
+        'Ay'
+        >>> cat2.name
+        'Grumpy'
+        >>> cat2.lives
+        8
+        """
+        cat_names = ["Felix", "Bugs", "Grumpy"]
+        "*** YOUR CODE HERE ***"
+        return cls(cat_names[len(owner)%3], owner, len(owner)+len(cat_names[len(owner)%3]))
 
 
-def make_adder_inc(a):
-    """
-    >>> adder1 = make_adder_inc(5)
-    >>> adder2 = make_adder_inc(6)
-    >>> adder1(2)
-    7
-    >>> adder1(2) # 5 + 2 + 1
-    8
-    >>> adder1(10) # 5 + 10 + 2
-    17
-    >>> [adder1(x) for x in [1, 2, 3]]
-    [9, 11, 13]
-    >>> adder2(5)
-    11
-    """
-    "*** YOUR CODE HERE ***"
-    def adder(b):
-        nonlocal a
-        a = a + 1
-        return a + b - 1
-    return adder
-
-
-def make_fib():
-    """Returns a function that returns the next Fibonacci number
-    every time it is called.
-
-    >>> fib = make_fib()
-    >>> fib()
-    0
-    >>> fib()
-    1
-    >>> fib()
-    1
-    >>> fib()
+class Account:
+    """An account has a balance and a holder.
+    >>> a = Account('John')
+    >>> a.deposit(10)
+    10
+    >>> a.balance
+    10
+    >>> a.interest
+    0.02
+    >>> a.time_to_retire(10.25) # 10 -> 10.2 -> 10.404
     2
-    >>> fib()
-    3
-    >>> fib2 = make_fib()
-    >>> fib() + sum([fib2() for _ in range(5)])
-    12
-    >>> from construct_check import check
-    >>> # Do not use lists in your implementation
-    >>> check(this_file, 'make_fib', ['List'])
-    True
+    >>> a.balance               # balance should not change
+    10
+    >>> a.time_to_retire(11)    # 10 -> 10.2 -> ... -> 11.040808032
+    5
+    >>> a.time_to_retire(100)
+    117
     """
+    max_withdrawal = 10
+    interest = 0.02
+
+    def __init__(self, account_holder):
+        self.balance = 0
+        self.holder = account_holder
+
+    def deposit(self, amount):
+        self.balance = self.balance + amount
+        return self.balance
+
+    def withdraw(self, amount):
+        if amount > self.balance:
+            return "Insufficient funds"
+        if amount > self.max_withdrawal:
+            return "Can't withdraw that amount"
+        self.balance = self.balance - amount
+        return self.balance
+
+    def time_to_retire(self, amount):
+        """Return the number of years until balance would grow to amount."""
+        assert self.balance > 0 and amount > 0 and self.interest > 0
+        "*** YOUR CODE HERE ***"
+        tmp=self.balance
+        years=0
+        while tmp<amount:
+            tmp=tmp*(1+self.interest)
+            years+=1
+        return years
+class FreeChecking(Account):
+    """A bank account that charges for withdrawals, but the first two are free!
+    >>> ch = FreeChecking('Jack')
+    >>> ch.balance = 20
+    >>> ch.withdraw(100)  # First one's free
+    'Insufficient funds'
+    >>> ch.withdraw(3)    # And the second
+    17
+    >>> ch.balance
+    17
+    >>> ch.withdraw(3)    # Ok, two free withdrawals is enough
+    13
+    >>> ch.withdraw(3)
+    9
+    >>> ch2 = FreeChecking('John')
+    >>> ch2.balance = 10
+    >>> ch2.withdraw(3) # No fee
+    7
+    >>> ch.withdraw(3)  # ch still charges a fee
+    5
+    >>> ch.withdraw(5)  # Not enough to cover fee + withdraw
+    'Insufficient funds'
+    """
+    withdraw_fee = 1
+    free_withdrawals = 2
+
     "*** YOUR CODE HERE ***"
-    f1, f2 = 1, 0
-    def fib():
-        nonlocal f1, f2
-        f1, f2 = f2, f1 + f2
-        return f1
-    return fib
-
-
-def insert_items(lst, entry, elem):
-    """
-    >>> test_lst = [1, 5, 8, 5, 2, 3]
-    >>> new_lst = insert_items(test_lst, 5, 7)
-    >>> new_lst
-    [1, 5, 7, 8, 5, 7, 2, 3]
-    >>> large_lst = [1, 4, 8]
-    >>> large_lst2 = insert_items(large_lst, 4, 4)
-    >>> large_lst2
-    [1, 4, 4, 8]
-    >>> large_lst3 = insert_items(large_lst2, 4, 6)
-    >>> large_lst3
-    [1, 4, 6, 4, 6, 8]
-    >>> large_lst3 is large_lst
-    True
-    """
-    "*** YOUR CODE HERE ***"
-    index = 0
-    size = len(lst)
-    while index < size:
-        if lst[index] == entry:
-            lst.insert(index + 1, elem)
-            index += 1
-            size += 1
-        index += 1
-    return lst
-
+    def withdraw(self, amount):
+        if self.free_withdrawals>0:
+            self.free_withdrawals-=1
+        else:
+            amount+=1
+        if amount>self.balance:
+            return 'Insufficient funds'
+        else:
+            self.balance-=amount
+            return self.balance
