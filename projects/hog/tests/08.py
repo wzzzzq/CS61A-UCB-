@@ -5,7 +5,7 @@ test = {
     {
       'cases': [
         {
-          'answer': '562542d6415ecc5c5253297f5be4bea1',
+          'answer': 'It takes in a function as an argument',
           'choices': [
             'It contains a nested function',
             'It calls a function that is not itself',
@@ -13,19 +13,19 @@ test = {
             'It uses the *args keyword'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False,
           'question': 'What is one reason that make_averaged is a higher order function?'
         },
         {
-          'answer': '159f99fb0e6b0dae968c6b227fa282ee',
+          'answer': 'An arbitrary amount, which is why we need to use *args to call it',
           'choices': [
             'None',
             'Two',
             'An arbitrary amount, which is why we need to use *args to call it'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False,
           'question': 'How many arguments does the function passed into make_averaged take?'
         }

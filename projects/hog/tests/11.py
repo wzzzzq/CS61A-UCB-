@@ -7,31 +7,28 @@ test = {
         {
           'code': r"""
           >>> hog_pile_strategy(2, 10, threshold=10, num_rolls=6)
-          327b19ffebddf93982e1ad2a4a6486f4
-          # locked
+          6
           """,
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False
         },
         {
           'code': r"""
           >>> hog_pile_strategy(30, 54, threshold=10, num_rolls=6)
-          327b19ffebddf93982e1ad2a4a6486f4
-          # locked
+          6
           """,
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False
         },
         {
           'code': r"""
           >>> hog_pile_strategy(20, 32, threshold=7, num_rolls=6)
-          962aea5f59fc55bd65ccacf4603c8f22
-          # locked
+          0
           """,
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False
         },
         {
