@@ -1,266 +1,184 @@
-def make_bank(balance):
-    """Returns a bank function with a starting balance. Supports
-    withdrawals and deposits.
+passphrase = '*** PASSPHRASE HERE ***'
 
-    >>> bank = make_bank(100)
-    >>> bank('withdraw', 40)    # 100 - 40
-    60
-    >>> bank('hello', 500)      # Invalid message passed in
-    'Invalid message'
-    >>> bank('deposit', 20)     # 60 + 20
-    80
-    >>> bank('withdraw', 90)    # 80 - 90; not enough money
-    'Insufficient funds'
-    >>> bank('deposit', 100)    # 80 + 100
-    180
-    >>> bank('goodbye', 0)      # Invalid message passed in
-    'Invalid message'
-    >>> bank('withdraw', 60)    # 180 - 60
-    120
+
+def midsem_survey(p):
     """
-    def bank(message, amount):
-        "*** YOUR CODE HERE ***"
-        nonlocal balance
-        if message == "deposit":
-            balance += amount
-            return balance
-        elif message == "withdraw":
-            if amount > balance:
-                return "Insufficient funds"
-            else:
-                balance -= amount
-                return balance
-        else:
-            return 'Invalid message'
-    return bank
+    You do not need to understand this code.
+    >>> midsem_survey(passphrase)
+    '6b11cc4633eb00f582dcc3a83f713aef58d85a1900d7cd9881d60e76'
+    """
+    import hashlib
+    return hashlib.sha224(p.encode('utf-8')).hexdigest()
 
 
-def make_withdraw(balance, password):
-    """Return a password-protected withdraw function.
+def has_path(t, term):
+    """Return whether there is a path in a Tree where the entries along the path
+    spell out a particular term.
 
-    >>> w = make_withdraw(100, 'hax0r')
-    >>> w(25, 'hax0r')
-    75
-    >>> error = w(90, 'hax0r')
-    >>> error
-    'Insufficient funds'
-    >>> error = w(25, 'hwat')
-    >>> error
-    'Incorrect password'
-    >>> new_bal = w(25, 'hax0r')
-    >>> new_bal
-    50
-    >>> w(75, 'a')
-    'Incorrect password'
-    >>> w(10, 'hax0r')
-    40
-    >>> w(20, 'n00b')
-    'Incorrect password'
-    >>> w(10, 'hax0r')
-    "Too many incorrect attempts. Attempts: ['hwat', 'a', 'n00b']"
-    >>> w(10, 'l33t')
-    "Too many incorrect attempts. Attempts: ['hwat', 'a', 'n00b']"
-    >>> type(w(10, 'l33t')) == str
+    >>> greetings = Tree('h', [Tree('i'),
+    ...                        Tree('e', [Tree('l', [Tree('l', [Tree('o')])]),
+    ...                                   Tree('y')])])
+    >>> print(greetings)
+    h
+      i
+      e
+        l
+          l
+            o
+        y
+    >>> has_path(greetings, 'h')
+    True
+    >>> has_path(greetings, 'i')
+    False
+    >>> has_path(greetings, 'hi')
+    True
+    >>> has_path(greetings, 'hello')
+    True
+    >>> has_path(greetings, 'hey')
+    True
+    >>> has_path(greetings, 'bye')
+    False
+    >>> has_path(greetings, 'hint')
+    False
+    """
+    assert len(term) > 0, 'no path for empty term.'
+    "*** YOUR CODE HERE ***"
+    if term[0]!=t.label:
+        return False
+    elif len(term)==1:
+        return True
+    else:
+        for b in t.branches:
+            if has_path(b,term[1:]):
+                return True
+        return False
+
+
+
+def duplicate_link(lnk, val):
+    """Mutates `lnk` such that if there is a linked list
+    node that has a first equal to value, that node will
+    be duplicated. Note that you should be mutating the
+    original link list.
+
+    >>> x = Link(5, Link(4, Link(3)))
+    >>> duplicate_link(x, 5)
+    >>> x
+    Link(5, Link(5, Link(4, Link(3))))
+    >>> y = Link(2, Link(4, Link(6, Link(8))))
+    >>> duplicate_link(y, 10)
+    >>> y
+    Link(2, Link(4, Link(6, Link(8))))
+    """
+    "*** YOUR CODE HERE ***"
+    if lnk is Link.empty:
+        return lnk
+    elif lnk.first==val:
+        duplicate_link(lnk.rest,val)
+        lnk.rest=Link(val,lnk.rest)
+    else:
+        duplicate_link(lnk.rest,val)
+        
+
+def deep_map_mut(fn, lnk):
+    """Mutates a deep link lnk by replacing each item found with the
+    result of calling fn on the item.  Does NOT create new Links (so
+    no use of Link's constructor).
+
+    Does not return the modified Link object.
+
+    >>> link1 = Link(3, Link(Link(4), Link(5, Link(6))))
+    >>> # Disallow the use of making new Links before calling deep_map_mut
+    >>> Link.__init__, hold = lambda *args: print("Do not create any new Links."), Link.__init__
+    >>> try:
+    ...     deep_map_mut(lambda x: x * x, link1)
+    ... finally:
+    ...     Link.__init__ = hold
+    >>> print(link1)
+    <9 <16> 25 36>
+    """
+    "*** YOUR CODE HERE ***"
+    if lnk==Link.empty:
+        return
+    if isinstance(lnk.first,Link):
+        deep_map_mut(fn,lnk.first)
+    else:
+        lnk.first=fn(lnk.first)
+    deep_map_mut(fn,lnk.rest)
+
+class Tree:
+    """
+    >>> t = Tree(3, [Tree(2, [Tree(5)]), Tree(4)])
+    >>> t.label
+    3
+    >>> t.branches[0].label
+    2
+    >>> t.branches[1].is_leaf()
     True
     """
-    "*** YOUR CODE HERE ***"
-    invalid_trials = []
-    locked = False
-    def withdraw(amount, pw):
-        nonlocal balance, password, locked
-        if locked:
-            return f"Too many incorrect attempts. Attempts: {invalid_trials}"
-        if pw == password:
-            if amount > balance:
-                return "Insufficient funds"
-            else:
-                balance -= amount
-                return balance
+
+    def __init__(self, label, branches=[]):
+        for b in branches:
+            assert isinstance(b, Tree)
+        self.label = label
+        self.branches = list(branches)
+
+    def is_leaf(self):
+        return not self.branches
+
+    def __repr__(self):
+        if self.branches:
+            branch_str = ', ' + repr(self.branches)
         else:
-            invalid_trials.append(pw)
-            if len(invalid_trials) == 3:
-                locked = True
-            return "Incorrect password"
-    return withdraw
+            branch_str = ''
+        return 'Tree({0}{1})'.format(self.label, branch_str)
+
+    def __str__(self):
+        def print_tree(t, indent=0):
+            tree_str = '  ' * indent + str(t.label) + "\n"
+            for b in t.branches:
+                tree_str += print_tree(b, indent + 1)
+            return tree_str
+        return print_tree(self).rstrip()
 
 
+class Link:
+    """A linked list.
 
-
-def repeated(t, k):
-    """Return the first value in iterator T that appears K times in a row. Iterate through the items such that
-    if the same iterator is passed into repeated twice, it continues in the second call at the point it left off
-    in the first.
-
-    >>> lst = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
-    >>> repeated(lst, 2)
-    9
-    >>> lst2 = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
-    >>> repeated(lst2, 3)
-    8
-    >>> s = iter([3, 2, 2, 2, 1, 2, 1, 4, 4, 5, 5, 5])
-    >>> repeated(s, 3)
-    2
-    >>> repeated(s, 3)
-    5
-    >>> s2 = iter([4, 1, 6, 6, 7, 7, 8, 8, 2, 2, 2, 5])
-    >>> repeated(s2, 3)
-    2
-    """
-    assert k > 1
-    "*** YOUR CODE HERE ***"
-    last = next(t)
-    occur_times = 1
-    for v in t:
-        if v == last:
-            occur_times += 1
-            if occur_times == k:
-                return v
-        else:
-            occur_times = 1
-            last = v
-
-def merge(incr_a, incr_b):
-    """Yield the elements of strictly increasing iterables incr_a and incr_b, removing
-    repeats. Assume that incr_a and incr_b have no repeats. incr_a or incr_b may be infinite
-    sequences.
-
-    >>> m = merge([0, 2, 4, 6, 8, 10, 12, 14], [0, 3, 6, 9, 12, 15])
-    >>> type(m)
-    <class 'generator'>
-    >>> list(m)
-    [0, 2, 3, 4, 6, 8, 9, 10, 12, 14, 15]
-    >>> def big(n):
-    ...    k = 0
-    ...    while True: yield k; k += n
-    >>> m = merge(big(2), big(3))
-    >>> [next(m) for _ in range(11)]
-    [0, 2, 3, 4, 6, 8, 9, 10, 12, 14, 15]
-    """
-    iter_a, iter_b = iter(incr_a), iter(incr_b)
-    next_a, next_b = next(iter_a, None), next(iter_b, None)
-    "*** YOUR CODE HERE ***"
-    while next_a is not None or next_b is not None:
-        if next_a is None:
-            yield next_b
-            next_b = next(iter_b, None)
-        elif next_b is None:
-            yield next_a
-            next_a = next(iter_a, None)
-        else:
-            if next_a < next_b:
-                yield next_a
-                next_a = next(iter_a, None)
-            elif next_b < next_a:
-                yield next_b
-                next_b = next(iter_b, None)
-            else:
-                yield next_a
-                next_a, next_b = next(iter_a, None), next(iter_b, None)
-
-
-
-def make_joint(withdraw, old_pass, new_pass):
-    """Return a password-protected withdraw function that has joint access to
-    the balance of withdraw.
-
-    >>> w = make_withdraw(100, 'hax0r')
-    >>> w(25, 'hax0r')
-    75
-    >>> make_joint(w, 'my', 'secret')
-    'Incorrect password'
-    >>> j = make_joint(w, 'hax0r', 'secret')
-    >>> w(25, 'secret')
-    'Incorrect password'
-    >>> j(25, 'secret')
-    50
-    >>> j(25, 'hax0r')
-    25
-    >>> j(100, 'secret')
-    'Insufficient funds'
-
-    >>> j2 = make_joint(j, 'secret', 'code')
-    >>> j2(5, 'code')
-    20
-    >>> j2(5, 'secret')
-    15
-    >>> j2(5, 'hax0r')
-    10
-
-    >>> j2(25, 'password')
-    'Incorrect password'
-    >>> j2(5, 'secret')
-    "Too many incorrect attempts. Attempts: ['my', 'secret', 'password']"
-    >>> j(5, 'secret')
-    "Too many incorrect attempts. Attempts: ['my', 'secret', 'password']"
-    >>> w(5, 'hax0r')
-    "Too many incorrect attempts. Attempts: ['my', 'secret', 'password']"
-    >>> make_joint(w, 'hax0r', 'hello')
-    "Too many incorrect attempts. Attempts: ['my', 'secret', 'password']"
-    """
-    "*** YOUR CODE HERE ***"
-    check = withdraw(0, old_pass)
-    if type(check) == str:
-        return check
-    def joint_withdraw(amount, password):
-        nonlocal old_pass, new_pass
-        return withdraw(amount, old_pass if password == new_pass else password)
-    return joint_withdraw
-
-
-
-
-def remainders_generator(m):
-    """
-    Yields m generators. The ith yielded generator yields natural numbers whose
-    remainder is i when divided by m.
-
-    >>> import types
-    >>> [isinstance(gen, types.GeneratorType) for gen in remainders_generator(5)]
-    [True, True, True, True, True]
-    >>> remainders_four = remainders_generator(4)
-    >>> for i in range(4):
-    ...     print("First 3 natural numbers with remainder {0} when divided by 4:".format(i))
-    ...     gen = next(remainders_four)
-    ...     for _ in range(3):
-    ...         print(next(gen))
-    First 3 natural numbers with remainder 0 when divided by 4:
-    4
-    8
-    12
-    First 3 natural numbers with remainder 1 when divided by 4:
+    >>> s = Link(1)
+    >>> s.first
     1
-    5
-    9
-    First 3 natural numbers with remainder 2 when divided by 4:
-    2
-    6
-    10
-    First 3 natural numbers with remainder 3 when divided by 4:
-    3
-    7
-    11
+    >>> s.rest is Link.empty
+    True
+    >>> s = Link(2, Link(3, Link(4)))
+    >>> s.first = 5
+    >>> s.rest.first = 6
+    >>> s.rest.rest = Link.empty
+    >>> s                                    # Displays the contents of repr(s)
+    Link(5, Link(6))
+    >>> s.rest = Link(7, Link(Link(8, Link(9))))
+    >>> s
+    Link(5, Link(7, Link(Link(8, Link(9)))))
+    >>> print(s)                             # Prints str(s)
+    <5 7 <8 9>>
     """
-    "*** YOUR CODE HERE ***"
-    def remainder(n):
-        while True:
-            for natural in naturals():
-                yield natural*m + n
-    yield remainder(0)
-    for i in range(-m+1,0):
-        yield remainder(i)
+    empty = ()
 
-def naturals():
-    """A generator function that yields the infinite sequence of natural
-    numbers, starting at 1.
+    def __init__(self, first, rest=empty):
+        assert rest is Link.empty or isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
 
-    >>> m = naturals()
-    >>> type(m)
-    <class 'generator'>
-    >>> [next(m) for _ in range(10)]
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    """
-    i = 1
-    while True:
-        yield i
-        i += 1
+    def __repr__(self):
+        if self.rest is not Link.empty:
+            rest_repr = ', ' + repr(self.rest)
+        else:
+            rest_repr = ''
+        return 'Link(' + repr(self.first) + rest_repr + ')'
 
+    def __str__(self):
+        string = '<'
+        while self.rest is not Link.empty:
+            string += str(self.first) + ' '
+            self = self.rest
+        return string + str(self.first) + '>'
