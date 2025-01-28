@@ -1,24 +1,18 @@
 {
     "name": "Lab 8",
-    "endpoint": "cal/cs61a/su20/lab08",
+    "endpoint": "cal/cs61a/sp22/lab08",
     "src": [
-        "lab08.py",
-        "classes.py"
+        "lab08.py"
     ],
     "tests": {
         "lab*.py": "doctest",
-        "tests/*.py": "ok_test",
-        "classes.py": "doctest"
+        "tests/*.py": "ok_test"
     },
     "default_tests": [
-        "iterators",
-        "make_generators_generator",
-        "wwpd-car",
-        "Card.__init__",
-        "Card.power",
-        "Player.__init__",
-        "Player.draw",
-        "Player.play"
+        "repeated",
+        "merge",
+        "deep_len",
+        "add_d_leaves"
     ],
     "protocols": [
         "restore",
