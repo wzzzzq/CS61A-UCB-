@@ -1,48 +1,44 @@
 test = {
-  'name': 'remove',
+  'name': 'pow',
   'points': 1,
   'suites': [
     {
       'cases': [
         {
           'code': r"""
-          scm> (remove 3 nil)
-          ()
+          scm> (pow 2 5)
+          32
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          scm> (remove 2 '(1 3 2))
-          (1 3)
+          scm> (pow 10 3)
+          1000
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          scm> (remove 1 '(1 3 2))
-          (3 2)
+          scm> (pow 3 3)
+          27
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          scm> (remove 42 '(1 3 2))
-          (1 3 2)
+          scm> (pow 1 100000000000000) ; make sure this doesn't run forever!
+          1
           """,
           'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          scm> (remove 3 '(1 3 3 7))
-          (1 7)
-          """,
-          'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         }
       ],
       'scored': True,

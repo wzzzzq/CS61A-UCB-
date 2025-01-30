@@ -10,7 +10,8 @@ test = {
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -18,7 +19,8 @@ test = {
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -26,7 +28,8 @@ test = {
           6
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -34,7 +37,8 @@ test = {
           12
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         }
       ],
       'scored': True,

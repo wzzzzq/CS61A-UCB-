@@ -6,11 +6,21 @@ test = {
       'cases': [
         {
           'code': r"""
+          scm> (add-then-mul 2)
+          6
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
           scm> ((composed add-one add-one) 2)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -18,7 +28,8 @@ test = {
           8
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -26,15 +37,8 @@ test = {
           5
           """,
           'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          scm> ((composed multiply-by-two add-one) 2)
-          6
-          """,
-          'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -42,7 +46,8 @@ test = {
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -50,7 +55,8 @@ test = {
           6
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -58,14 +64,16 @@ test = {
           8
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         }
       ],
-      'scored': False,
+      'scored': True,
       'setup': r"""
       scm> (load-all ".")
       scm> (define (add-one a) (+ a 1))
       scm> (define (multiply-by-two a) (* a 2))
+      scm> (define add-then-mul (composed multiply-by-two add-one))
       """,
       'teardown': '',
       'type': 'scheme'

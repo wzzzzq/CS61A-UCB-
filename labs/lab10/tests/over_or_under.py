@@ -10,7 +10,8 @@ test = {
           0
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -18,7 +19,8 @@ test = {
           1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -26,12 +28,13 @@ test = {
           -1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         }
       ],
       'scored': True,
       'setup': r"""
-      scm> (load "lab10.scm")
+      scm> (load-all ".")
       """,
       'teardown': '',
       'type': 'scheme'

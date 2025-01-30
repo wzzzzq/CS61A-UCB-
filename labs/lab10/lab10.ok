@@ -1,6 +1,6 @@
 {
     "name": "Lab 10",
-    "endpoint": "cal/cs61a/su20/lab10",
+    "endpoint": "cal/cs61a/sp22/lab10",
     "src": [
         "lab10.scm"
     ],
@@ -8,10 +8,11 @@
         "tests/*.py": "ok_test"
     },
     "default_tests": [
-        "wwsd_lists",
+        "combinations",
         "over_or_under",
-        "filter_lst",
-        "make_adder"
+        "make_adder",
+        "composed",
+        "pow"
     ],
     "protocols": [
         "restore",
