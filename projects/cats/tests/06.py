@@ -1,895 +1,1017 @@
 test = {
   'name': 'Problem 6',
-  'points': 2,
+  'points': 3,
   'suites': [
     {
       'cases': [
         {
           'code': r"""
           >>> big_limit = 10
-          >>> shifty_shifts("car", "cad", big_limit)
+          >>> sphinx_swaps("car", "cad", big_limit)
           1
-          >>> shifty_shifts("this", "that", big_limit)
+          >>> sphinx_swaps("this", "that", big_limit)
           2
-          >>> shifty_shifts("one", "two", big_limit)
+          >>> sphinx_swaps("one", "two", big_limit)
           3
-          >>> shifty_shifts("from", "form", big_limit)
+          >>> sphinx_swaps("from", "form", big_limit)
           2
-          >>> shifty_shifts("awe", "awesome", big_limit)
+          >>> sphinx_swaps("awe", "awesome", big_limit)
           4
-          >>> shifty_shifts("someawe", "awesome", big_limit)
+          >>> sphinx_swaps("someawe", "awesome", big_limit)
           6
-          >>> shifty_shifts("awful", "awesome", big_limit)
+          >>> sphinx_swaps("awful", "awesome", big_limit)
           5
-          >>> shifty_shifts("awful", "awesome", 3) > 3
+          >>> sphinx_swaps("awful", "awesome", 3) > 3
           True
-          >>> shifty_shifts("awful", "awesome", 4) > 4
+          >>> sphinx_swaps("awful", "awesome", 4) > 4
           True
-          >>> shifty_shifts("awful", "awesome", 5) > 5
+          >>> sphinx_swaps("awful", "awesome", 5) > 5
           False
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
           >>> big_limit = 10
-          >>> shifty_shifts("goodbye", "good", big_limit)
-          3
-          >>> shifty_shifts("pront", "print", big_limit)
+          >>> sphinx_swaps("nice", "rice", big_limit)    # Substitute: n -> r
           1
-          >>> shifty_shifts("misspollid", "misspelled", big_limit)
+          >>> sphinx_swaps("range", "rungs", big_limit)  # Substitute: a -> u, e -> s
           2
-          >>> shifty_shifts("worry", "word", big_limit)
+          >>> sphinx_swaps("pill", "pillage", big_limit) # Don't substitute anything, length difference of 3.
+          3
+          >>> sphinx_swaps("roses", "arose", big_limit)  # Substitute: r -> a, o -> r, s -> o, e -> s, s -> e
+          5
+          >>> sphinx_swaps("rose", "hello", big_limit)   # Substitute: r->h, o->e, s->l, e->l, length difference of 1.
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> big_limit = 10
+          >>> sphinx_swaps("goodbye", "good", big_limit)
+          3
+          >>> sphinx_swaps("pront", "print", big_limit)
+          1
+          >>> sphinx_swaps("misspollid", "misspelled", big_limit)
           2
-          >>> shifty_shifts("first", "flashy", big_limit)
+          >>> sphinx_swaps("worry", "word", big_limit)
+          2
+          >>> sphinx_swaps("first", "flashy", big_limit)
           4
-          >>> shifty_shifts("hash", "ash", big_limit)
+          >>> sphinx_swaps("hash", "ash", big_limit)
           4
-          >>> shifty_shifts("ash", "hash", big_limit)
+          >>> sphinx_swaps("ash", "hash", big_limit)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
           >>> small_words_list = ["spell", "nest", "test", "pest", "best", "bird", "wired",
           ...                     "abstraction", "abstract", "peeling", "gestate", "west",
           ...                     "spelling", "bastion"]
-          >>> autocorrect("speling", small_words_list, shifty_shifts, 10)
+          >>> autocorrect("speling", small_words_list, sphinx_swaps, 10)
           'peeling'
-          >>> autocorrect("abstrction", small_words_list, shifty_shifts, 10)
+          >>> autocorrect("abstrction", small_words_list, sphinx_swaps, 10)
           'abstract'
-          >>> autocorrect("wird", small_words_list, shifty_shifts, 10)
+          >>> autocorrect("wird", small_words_list, sphinx_swaps, 10)
           'bird'
-          >>> autocorrect("gest", small_words_list, shifty_shifts, 10)
+          >>> autocorrect("gest", small_words_list, sphinx_swaps, 10)
           'nest'
-          >>> # ban iteration
-          >>> test.check('cats.py', 'shifty_shifts', ['While', 'For'])
+          >>> # ban iteration, list comprehensions
+          >>> test.check('cats.py', 'sphinx_swaps', ['While', 'For', 'ListComp'])
           True
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> # ***Check that the recursion stops when the limit is reached***
+          >>> # Check that the recursion stops when the limit is reached
           >>> import trace, io
           >>> from contextlib import redirect_stdout
           >>> with io.StringIO() as buf, redirect_stdout(buf):
-          ...     trace.Trace(trace=True).runfunc(shifty_shifts, "someaweqwertyuio", "awesomeasdfghjkl", 3)
+          ...     trace.Trace(trace=True).runfunc(sphinx_swaps, "someaweqwertyuio", "awesomeasdfghjkl", 3)
           ...     output = buf.getvalue()
           >>> len([line for line in output.split('\n') if 'funcname' in line]) < 10
           True
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('thong', 'thong', 100)
+          >>> sphinx_swaps('rut', 'ruhw', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('yo', 'yo', 100)
           0
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('place', 'wreat', 100)
+          >>> sum([sphinx_swaps('slurp', 'slurpn', k) > k for k in range(6)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('nice', 'nica', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('owen', 'owen', k) > k for k in range(4)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('donee', 'shush', 100)
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('pray', 'okee', 100)
+          >>> sum([sphinx_swaps('drest', 'dresm', k) > k for k in range(5)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('cand', 'towy', 100)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('cloit', 'cloit', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('yond', 'yo', k) > k for k in range(4)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('tb', 'tb', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('gobi', 'gobi', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('watap', 'wotapi', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('baffy', 'bafq', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('else', 'konak', k) > k for k in range(5)])
+          >>> sphinx_swaps('drawn', 'terry', 100)
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('zygon', 'zrgoi', 100)
-          2
+          >>> sum([sphinx_swaps('stour', 'shows', k) > k for k in range(5)])
+          3
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('lar', 'lar', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('shop', 'shd', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('pc', 'pc', k) > k for k in range(2)])
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('sail', 'sail', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('fiber', 'fibe', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('doff', 'do', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('meile', 'meilew', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('donor', 'donorc', k) > k for k in range(6)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('meet', 'meeu', k) > k for k in range(4)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('tic', 'tih', k) > k for k in range(3)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('taft', 'hewer', k) > k for k in range(5)])
+          >>> sum([sphinx_swaps('plash', 'cw', k) > k for k in range(5)])
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('moorn', 'toxa', k) > k for k in range(5)])
+          >>> sphinx_swaps('cube', 'cube', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('envy', 'en', k) > k for k in range(4)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('panto', 'panto', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('herem', 'herem', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('zanze', 'culm', k) > k for k in range(5)])
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('kauri', 'kourj', k) > k for k in range(5)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('hiver', 'hicer', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('tulip', 'lulipi', k) > k for k in range(6)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('aside', 'ataxy', k) > k for k in range(5)])
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('hamal', 'hamal', k) > k for k in range(5)])
-          0
+          >>> sphinx_swaps('volt', 'vol', 100)
+          1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('pridy', 'dance', 100)
-          5
+          >>> sphinx_swaps('sleep', 'sleop', 100)
+          1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('dekko', 'ee', 100)
+          >>> sum([sphinx_swaps('cet', 'duad', k) > k for k in range(4)])
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('julio', 'juli', k) > k for k in range(5)])
+          >>> sum([sphinx_swaps('opal', 'oral', k) > k for k in range(4)])
           1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('boist', 'spume', k) > k for k in range(5)])
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('jail', 'jailu', k) > k for k in range(5)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('cumin', 'goes', 100)
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('civil', 'whose', k) > k for k in range(5)])
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('stead', 'ny', k) > k for k in range(5)])
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('mikie', 'mdkie', k) > k for k in range(5)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('utils', 'utils', k) > k for k in range(5)])
+          >>> sum([sphinx_swaps('pathy', 'pathy', k) > k for k in range(5)])
           0
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('nuque', 'nuquv', k) > k for k in range(5)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('chine', 'ihi', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('tour', 'erase', k) > k for k in range(5)])
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('ak', 'rose', 100)
+          >>> sphinx_swaps('drive', 'dritebcx', 100)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('sawah', 'shape', k) > k for k in range(5)])
+          >>> sum([sphinx_swaps('bater', 'bateri', k) > k for k in range(6)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('ward', 'crier', k) > k for k in range(5)])
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('massy', 'massy', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('tonk', 'tonhbx', 100)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('sith', 'demit', 100)
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('arty', 'ar', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('exist', 'exisp', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('plot', 'plotf', k) > k for k in range(5)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('wreak', 'wreak', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('icon', 'ipog', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('caza', 'scale', 100)
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('rann', 'daw', k) > k for k in range(4)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('natal', 'natalj', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('tji', 'tjv', k) > k for k in range(3)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('input', 'input', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('lysin', 'lzsunl', k) > k for k in range(6)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('bed', 'bey', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('topsl', 'topsl', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('becap', 'becap', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('tiny', 'sizes', 100)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('elb', 'logia', 100)
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('noily', 'soi', k) > k for k in range(5)])
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('fluid', 'grad', 100)
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('titer', 'titegw', k) > k for k in range(6)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('shood', 'shood', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('sher', 'dhey', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('dayal', 'qualm', 100)
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('tenai', 'whata', 100)
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('bow', 'how', 100)
+          >>> sum([sphinx_swaps('plots', 'plotss', k) > k for k in range(6)])
           1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('tony', 'togqq', k) > k for k in range(5)])
+          >>> sum([sphinx_swaps('plote', 'plot', k) > k for k in range(5)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('libra', 'unact', k) > k for k in range(5)])
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('shed', 'shetg', k) > k for k in range(5)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('lunes', 'lunes', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('shooi', 'sgcoi', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('cahow', 'cahow', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('watch', 'watch', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('jeans', 'uefnp', 100)
           3
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('baby', 'ton', k) > k for k in range(4)])
+          >>> sphinx_swaps('floey', 'uvea', 100)
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('pew', 'pe', k) > k for k in range(3)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('tec', 'teca', k) > k for k in range(4)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('chef', 'drib', k) > k for k in range(4)])
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('seron', 'seron', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('tame', 'tfme', k) > k for k in range(4)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('kissy', 'kissykd', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('str', 'st', k) > k for k in range(3)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('enema', 'hnem', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('beden', 'beden', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('coral', 'coral', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('hack', 'haykp', k) > k for k in range(5)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('alan', 'alan', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('aru', 'aru', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('tail', 'tailp', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('corps', 'co', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('kazi', 'kazi', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('bone', 'bone', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('dee', 'dee', k) > k for k in range(3)])
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('fuder', 'fuder', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('harl', 'harvn', k) > k for k in range(5)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('def', 'de', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('moio', 'yomo', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('amnia', 'agni', k) > k for k in range(5)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('pair', 'pair', k) > k for k in range(4)])
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('peai', 'seg', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('pryse', 'pryseffp', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('amelu', 'samp', 100)
+          >>> sum([sphinx_swaps('sowel', 'evert', k) > k for k in range(5)])
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('weak', 'wea', k) > k for k in range(4)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('atelo', 'atelo', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('uc', 'kc', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('strew', 'jaup', k) > k for k in range(5)])
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('dome', 'dume', k) > k for k in range(4)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('braze', 'sxaze', 100)
+          >>> sum([sphinx_swaps('zebu', 'zbb', k) > k for k in range(4)])
           2
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('zaman', 'zaman', k) > k for k in range(5)])
-          0
+          >>> sphinx_swaps('magma', 'magmasm', 100)
+          2
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('twank', 'renne', 100)
+          >>> sphinx_swaps('shood', 'ketal', 100)
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('stall', 'ftall', k) > k for k in range(5)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('towd', 'tow', k) > k for k in range(4)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('doty', 'dsto', k) > k for k in range(4)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('prime', 'huso', 100)
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('raspy', 'raeiya', k) > k for k in range(6)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('sight', 'szghtw', k) > k for k in range(6)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('scho', 'sc', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('sher', 'sided', 100)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('pinky', 'pin', k) > k for k in range(5)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('spoke', 'spoke', k) > k for k in range(5)])
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('recto', 'recto', k) > k for k in range(5)])
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('ula', 'ula', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('dame', 'froth', 100)
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('grane', 'gaane', k) > k for k in range(5)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('cycad', 'cqcad', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('creem', 'creemibh', k) > k for k in range(8)])
+          >>> sum([sphinx_swaps('glime', 'plane', k) > k for k in range(5)])
           3
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('alky', 'alfy', k) > k for k in range(4)])
+          >>> sum([sphinx_swaps('canon', 'canon', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('soon', 'sb', k) > k for k in range(4)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('would', 'douldtl', 100)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('yeat', 'yeat', k) > k for k in range(4)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('lexus', 'lexrs', k) > k for k in range(5)])
           1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('finds', 'fond', k) > k for k in range(5)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('argot', 'argotlp', k) > k for k in range(7)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> shifty_shifts('lc', 'roost', 100)
+          >>> sum([sphinx_swaps('randy', 'lose', k) > k for k in range(5)])
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('mi', 'iran', 100)
+          >>> sphinx_swaps('thee', 'theea', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('pilot', 'pilot', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('irk', 'hokey', 100)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('faded', 'fadedfeb', k) > k for k in range(8)])
+          >>> sum([sphinx_swaps('foody', 'lough', k) > k for k in range(5)])
+          4
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('mensa', 'ken', k) > k for k in range(5)])
           3
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([shifty_shifts('slee', 'ble', k) > k for k in range(4)])
+          >>> sum([sphinx_swaps('spung', 'spu', k) > k for k in range(5)])
           2
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> shifty_shifts('macro', 'macr', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('bbs', 'bbj', k) > k for k in range(3)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([shifty_shifts('roud', 'roud', k) > k for k in range(4)])
+          >>> sphinx_swaps('db', 'db', 100)
           0
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('beala', 'beama', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('bepun', 'bepu', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('film', 'fblu', k) > k for k in range(4)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('espn', 'esp', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('hondo', 'hbndao', k) > k for k in range(6)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('reps', 'gata', 100)
+          4
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('tirr', 'tsr', k) > k for k in range(4)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('slote', 'svotjg', k) > k for k in range(6)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('beeve', 'jegvd', k) > k for k in range(5)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('evade', 'evade', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('sinew', 'dineb', k) > k for k in range(5)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('goods', 'good', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('kiley', 'kiley', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([sphinx_swaps('score', 'score', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sphinx_swaps('flags', 'flaq', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
         }
       ],
       'scored': True,
       'setup': r"""
-      >>> from cats import shifty_shifts, autocorrect
+      >>> from cats import sphinx_swaps, autocorrect
       >>> import tests.construct_check as test
       """,
       'teardown': '',

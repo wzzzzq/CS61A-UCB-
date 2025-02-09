@@ -7,48 +7,64 @@ test = {
         {
           'code': r"""
           >>> big_limit = 10
-          >>> meowstake_matches("wird", "wiry", big_limit)
+          >>> minimum_mewtations("wird", "wiry", big_limit)
           1
-          >>> meowstake_matches("wird", "bird", big_limit)
+          >>> minimum_mewtations("wird", "bird", big_limit)
           1
-          >>> meowstake_matches("wird", "wir", big_limit)
+          >>> minimum_mewtations("wird", "wir", big_limit)
           1
-          >>> meowstake_matches("wird", "bwird", big_limit)
+          >>> minimum_mewtations("wird", "bwird", big_limit)
           1
-          >>> meowstake_matches("speling", "spelling", big_limit)
+          >>> minimum_mewtations("speling", "spelling", big_limit)
           1
-          >>> meowstake_matches("used", "use", big_limit)
+          >>> minimum_mewtations("used", "use", big_limit)
           1
-          >>> meowstake_matches("hash", "ash", big_limit)
+          >>> minimum_mewtations("hash", "ash", big_limit)
           1
-          >>> meowstake_matches("ash", "hash", big_limit)
+          >>> minimum_mewtations("ash", "hash", big_limit)
           1
-          >>> meowstake_matches("roses", "arose", big_limit)     # roses -> aroses -> arose
+          >>> minimum_mewtations("roses", "arose", big_limit)     # roses -> aroses -> arose
           2
-          >>> meowstake_matches("tesng", "testing", big_limit)   # tesng -> testng -> testing
+          >>> minimum_mewtations("tesng", "testing", big_limit)   # tesng -> testng -> testing
           2
-          >>> meowstake_matches("rlogcul", "logical", big_limit) # rlogcul -> logcul -> logicul -> logical
+          >>> minimum_mewtations("rlogcul", "logical", big_limit) # rlogcul -> logcul -> logicul -> logical
           3
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> big_limit = 10
+          >>> minimum_mewtations("cats", "scat", big_limit)
+          2
+          >>> minimum_mewtations("purng", "purring", big_limit)
+          2
+          >>> minimum_mewtations("ckiteus", "kittens", big_limit)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
           >>> small_words_list = ["spell", "nest", "test", "pest", "best", "bird", "wired",
           ...                     "abstraction", "abstract", "wire", "peeling", "gestate",
           ...                     "west", "spelling", "bastion"]
-          >>> autocorrect("speling", small_words_list, meowstake_matches, 10)
+          >>> autocorrect("speling", small_words_list, minimum_mewtations, 10)
           'spelling'
-          >>> autocorrect("abstrction", small_words_list, meowstake_matches, 10)
+          >>> autocorrect("abstrction", small_words_list, minimum_mewtations, 10)
           'abstraction'
-          >>> autocorrect("wird", small_words_list, meowstake_matches, 10)
+          >>> autocorrect("wird", small_words_list, minimum_mewtations, 10)
           'bird'
-          >>> autocorrect("gest", small_words_list, meowstake_matches, 10)
+          >>> autocorrect("gest", small_words_list, minimum_mewtations, 10)
           'nest'
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
@@ -56,818 +72,919 @@ test = {
           >>> import trace, io
           >>> from contextlib import redirect_stdout
           >>> with io.StringIO() as buf, redirect_stdout(buf):
-          ...     trace.Trace(trace=True).runfunc(meowstake_matches, "someawe", "awesome", 3)
+          ...     trace.Trace(trace=True).runfunc(minimum_mewtations, "someawe", "awesome", 3)
           ...     output = buf.getvalue()
           >>> len([line for line in output.split('\n') if 'funcname' in line]) < 1000
           True
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('thong', 'thong', 100)
+          >>> sum([minimum_mewtations('rut', 'rzumt', k) > k for k in range(5)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('yo', 'yo', 100)
           0
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('place', 'wreat', 100)
+          >>> minimum_mewtations('slurp', 'slurpm', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('nice', 'tie', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('owen', 'owen', k) > k for k in range(4)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('donee', 'shush', 100)
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('pray', 'okee', 100)
+          >>> sum([minimum_mewtations('drest', 'drwt', k) > k for k in range(5)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('cand', 'towy', 100)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('cloit', 'cloit', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('yond', 'snd', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('tb', 'tb', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('gobi', 'gobi', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('watap', 'woitap', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('baffy', 'btfi', k) > k for k in range(5)])
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('else', 'konak', k) > k for k in range(5)])
+          >>> minimum_mewtations('drawn', 'terry', 100)
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('zygon', 'jzon', k) > k for k in range(5)])
+          >>> sum([minimum_mewtations('stour', 'shows', k) > k for k in range(5)])
           3
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('lar', 'lar', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('shop', 'wopd', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('pc', 'pc', k) > k for k in range(2)])
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('sail', 'sail', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('fiber', 'fbk', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('doff', 'def', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('meile', 'mqeile', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('donor', 'doinor', k) > k for k in range(6)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('meet', 'meeu', k) > k for k in range(4)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('tic', 'tih', k) > k for k in range(3)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('taft', 'hewer', k) > k for k in range(5)])
+          >>> sum([minimum_mewtations('plash', 'cw', k) > k for k in range(5)])
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('moorn', 'toxa', k) > k for k in range(5)])
+          >>> minimum_mewtations('cube', 'cube', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('envy', 'nv', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('panto', 'panto', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('herem', 'hwerem', k) > k for k in range(6)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('zanze', 'culm', k) > k for k in range(5)])
+          5
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('kauri', 'kajr', k) > k for k in range(5)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('hiver', 'hicer', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('tulip', 'qlulip', k) > k for k in range(6)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('aside', 'ataxy', k) > k for k in range(5)])
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('hamal', 'hamal', k) > k for k in range(5)])
-          0
+          >>> sum([minimum_mewtations('volt', 'vol', k) > k for k in range(4)])
+          1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('pridy', 'dance', 100)
-          5
+          >>> minimum_mewtations('sleep', 'sleop', 100)
+          1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('dekko', 'zbk', 100)
+          >>> sum([minimum_mewtations('cet', 'duad', k) > k for k in range(4)])
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('julio', 'juio', k) > k for k in range(5)])
+          >>> sum([minimum_mewtations('opal', 'oral', k) > k for k in range(4)])
           1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('boist', 'spume', k) > k for k in range(5)])
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('jail', 'jaila', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('cumin', 'goes', 100)
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('civil', 'whose', k) > k for k in range(5)])
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('stead', 'ny', k) > k for k in range(5)])
-          5
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('mikie', 'mdiye', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('utils', 'utils', k) > k for k in range(5)])
+          >>> sum([minimum_mewtations('pathy', 'pathy', k) > k for k in range(5)])
           0
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('nuque', 'nuq', k) > k for k in range(5)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('chine', 'ziinx', k) > k for k in range(5)])
+          >>> sum([minimum_mewtations('drive', 'drgitb', k) > k for k in range(6)])
           3
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('tour', 'erase', k) > k for k in range(5)])
+          >>> sum([minimum_mewtations('bater', 'kbater', k) > k for k in range(6)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('ward', 'crier', k) > k for k in range(5)])
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('ak', 'rose', 100)
+          >>> minimum_mewtations('massy', 'massy', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('tonk', 'tobnhn', 100)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('sith', 'demit', 100)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('sawah', 'shape', k) > k for k in range(5)])
+          >>> minimum_mewtations('arty', 'at', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('exist', 'ext', k) > k for k in range(5)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('plot', 'plkot', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('wreak', 'wreak', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('icon', 'ipnw', 100)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('caza', 'scale', 100)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('rann', 'daw', k) > k for k in range(4)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('natal', 'nttyl', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('tji', 'j', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('input', 'input', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('lysin', 'lzsbun', 100)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('bed', 'bc', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('topsl', 'topsl', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('becap', 'becap', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('tiny', 'sizes', 100)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('elb', 'logia', 100)
+          >>> minimum_mewtations('plots', 'gplots', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('plote', 'plot', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('libra', 'unact', k) > k for k in range(5)])
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('noily', 'oibs', 100)
-          3
+          >>> sum([minimum_mewtations('shed', 'tshged', k) > k for k in range(6)])
+          2
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('fluid', 'grad', 100)
-          4
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('titer', 'tskhteur', 100)
-          4
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('shood', 'shood', 100)
+          >>> sum([minimum_mewtations('lunes', 'lunes', k) > k for k in range(5)])
           0
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('sher', 'xdhe', 100)
+          >>> minimum_mewtations('shooi', 'sgcoi', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('cahow', 'cahow', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('watch', 'wotchj', k) > k for k in range(6)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('jeans', 'anps', 100)
           3
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('dayal', 'qualm', 100)
+          >>> minimum_mewtations('floey', 'uvea', 100)
           4
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('tenai', 'whata', 100)
+          >>> minimum_mewtations('pew', 'pe', 100)
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('tec', 'gtec', k) > k for k in range(4)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('chef', 'drib', k) > k for k in range(4)])
+          4
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('sowel', 'evert', k) > k for k in range(5)])
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('bow', 'how', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('tony', 'togqq', k) > k for k in range(5)])
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('baby', 'ton', k) > k for k in range(4)])
-          4
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('seron', 'seron', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('tame', 'tfme', k) > k for k in range(4)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('kissy', 'kisdsxk', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('str', 'st', k) > k for k in range(3)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('enema', 'nemr', 100)
+          >>> sum([minimum_mewtations('zebu', 'eu', k) > k for k in range(4)])
           2
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('beden', 'beden', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('coral', 'coral', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('hack', 'rhack', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('alan', 'alan', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('aru', 'aru', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('tail', 'taiil', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('corps', 'ckcp', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('kazi', 'kazi', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('bone', 'bone', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('dee', 'derv', k) > k for k in range(4)])
+          >>> minimum_mewtations('magma', 'mahgfma', 100)
           2
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('fuder', 'fuder', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('harl', 'hhtar', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('def', 'df', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('moio', 'yomo', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('amnia', 'wna', k) > k for k in range(5)])
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('pair', 'pair', k) > k for k in range(4)])
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('peai', 'eabi', k) > k for k in range(4)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('pryse', 'prysvf', k) > k for k in range(6)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('amelu', 'samp', 100)
-          4
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('weak', 'wk', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('atelo', 'atelo', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('uc', 'kc', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('strew', 'jaup', k) > k for k in range(5)])
+          >>> minimum_mewtations('shood', 'ketal', 100)
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('dome', 'dume', k) > k for k in range(4)])
+          >>> sum([minimum_mewtations('stall', 'ftall', k) > k for k in range(5)])
           1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('braze', 'sxaze', 100)
+          >>> sum([minimum_mewtations('towd', 'owz', k) > k for k in range(4)])
           2
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('zaman', 'zadpamn', 100)
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('twank', 'renne', 100)
-          4
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('pinky', 'opiky', k) > k for k in range(5)])
+          >>> sum([minimum_mewtations('doty', 'dsto', k) > k for k in range(4)])
           2
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('spoke', 'spoke', k) > k for k in range(5)])
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('recto', 'recto', k) > k for k in range(5)])
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('ula', 'ula', 100)
-          0
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('dame', 'froth', 100)
+          >>> minimum_mewtations('prime', 'huso', 100)
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('grane', 'griae', 100)
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('cycad', 'cqcad', 100)
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('creem', 'ashreem', 100)
+          >>> sum([minimum_mewtations('raspy', 'eraiepy', k) > k for k in range(7)])
           3
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('alky', 'alfy', k) > k for k in range(4)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('finds', 'fid', k) > k for k in range(5)])
+          >>> sum([minimum_mewtations('sight', 'szlht', k) > k for k in range(5)])
           2
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('argot', 'arxgot', k) > k for k in range(6)])
+          >>> sum([minimum_mewtations('scho', 'ho', k) > k for k in range(4)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('sher', 'sided', 100)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('glime', 'plane', k) > k for k in range(5)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('canon', 'dcvanon', k) > k for k in range(7)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('soon', 'o', k) > k for k in range(4)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('would', 'wuold', k) > k for k in range(5)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('yeat', 'yawt', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('lexus', 'lexrs', k) > k for k in range(5)])
           1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('lc', 'roost', 100)
+          >>> sum([minimum_mewtations('randy', 'lose', k) > k for k in range(5)])
           5
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> meowstake_matches('mi', 'iran', 100)
-          4
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('faded', 'fabehc', k) > k for k in range(6)])
-          3
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('slee', 'ble', k) > k for k in range(4)])
-          2
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> meowstake_matches('macro', 'macr', 100)
+          >>> minimum_mewtations('thee', 'thaee', 100)
           1
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
         },
         {
           'code': r"""
-          >>> sum([meowstake_matches('bbs', 'bbj', k) > k for k in range(3)])
-          1
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sum([meowstake_matches('roud', 'roud', k) > k for k in range(4)])
+          >>> minimum_mewtations('pilot', 'pilot', 100)
           0
           """,
           'hidden': False,
-          'locked': False
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('irk', 'hokey', 100)
+          4
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('foody', 'lough', k) > k for k in range(5)])
+          4
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('mensa', 'mrvs', 100)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('spung', 'pxkg', k) > k for k in range(5)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('db', 'db', 100)
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('beala', 'beamff', k) > k for k in range(6)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('bepun', 'bpun', k) > k for k in range(5)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('film', 'fblu', k) > k for k in range(4)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('espn', 'esp', k) > k for k in range(4)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('hondo', 'gkondo', k) > k for k in range(6)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('reps', 'gata', 100)
+          4
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('tirr', 'ir', k) > k for k in range(4)])
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('slote', 'svoltj', 100)
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('beeve', 'jegvd', k) > k for k in range(5)])
+          3
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('evade', 'evade', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('sinew', 'dinw', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('goods', 'goos', k) > k for k in range(5)])
+          1
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('kiley', 'kiley', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> sum([minimum_mewtations('score', 'score', k) > k for k in range(5)])
+          0
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
+        },
+        {
+          'code': r"""
+          >>> minimum_mewtations('flags', 'faqs', 100)
+          2
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
         }
       ],
       'scored': True,
       'setup': r"""
-      >>> from cats import meowstake_matches, autocorrect
+      >>> from cats import minimum_mewtations, autocorrect
       """,
       'teardown': '',
       'type': 'doctest'

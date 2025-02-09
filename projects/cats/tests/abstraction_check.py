@@ -7,7 +7,7 @@ def datatype(obj):
     return type(obj).__name__
 
 # Generic abstract data type
-class Abstract(object):
+class Abstract:
     def __add__(self, other):
         raise AbstractionViolation("Can't add {} object to {}".format(datatype(self), datatype(other)))
 
@@ -51,29 +51,29 @@ class Abstract(object):
     def __hash__(self):
         return id(self)
 
-class Game(Abstract):
+class Match(Abstract):
     def __init__(self, words, times_per_player):
         self.a, self.b = words, times_per_player
     def __repr__(self):
-        return '<Game {} {}>'.format(self.a, self.b)
+        return '<Match {} {}>'.format(self.a, self.b)
 
-game = Game
+match = Match
 word_at = lambda u, v: u.a[v]
-all_words = lambda u: u.a
-all_times = lambda u: u.b
+get_words = lambda u: u.a
+get_times = lambda u: u.b
 time = lambda u, v, w: u.b[v][w]
 
 old = {}
 
 def swap_implementations(impl):
     # save other implementations
-    old['game'] = impl.game, impl.word_at, impl.all_words, impl.all_times, impl.time
+    old['match'] = impl.match, impl.word_at, impl.get_words, impl.get_times, impl.time
 
     # save our implementations
-    new_game = game, word_at, all_words, all_times, time
+    new_match = match, word_at, get_words, get_times, time
 
     # replace impl's implementations with ours
-    impl.game, impl.word_at, impl.all_words, impl.all_times, impl.time = game, word_at, all_words, all_times, time
+    impl.match, impl.word_at, impl.get_words, impl.get_times, impl.time = match, word_at, get_words, get_times, time
 
 def restore_implementations(impl):
-    impl.game, impl.word_at, impl.all_words, impl.all_times, impl.time = old['game']
+    impl.match, impl.word_at, impl.get_words, impl.get_times, impl.time = old['match']
