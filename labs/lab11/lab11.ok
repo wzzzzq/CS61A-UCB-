@@ -1,17 +1,17 @@
 {
     "name": "Lab 11",
-    "endpoint": "cal/cs61a/su20/lab11",
+    "endpoint": "cal/cs61a/sp22/lab11",
     "src": [
-        "expr.py",
-        "repl.py"
+        "buffer.py",
+        "scheme_reader.py"
     ],
     "tests": {
-        "*.py": "doctest",
         "tests/*.py": "ok_test"
     },
     "default_tests": [
-        "Name.eval",
-        "CallExpr.eval"
+        "buffer",
+        "scheme_read",
+        "quote"
     ],
     "protocols": [
         "restore",
